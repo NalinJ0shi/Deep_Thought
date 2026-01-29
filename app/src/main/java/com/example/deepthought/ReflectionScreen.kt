@@ -13,15 +13,17 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ReflectionScreen(category: String, onBack: () -> Unit) {
-    // Logic remains: pick one question and stick with it
-    val question = remember { QuestionRepository.getRandomQuestionByCategory(category) }
+    // Retrieve all questions for the category instead of just one
+    val questions = remember { QuestionRepository.getQuestionsByCategory(category) }
+    // Track which question we are currently showing
+    var currentIndex by remember { mutableIntStateOf(0) }
+    val currentQuestion = questions[currentIndex]
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp)
     ) {
-        // Top Bar - Just a close button to exit the "meditation"
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
@@ -31,7 +33,6 @@ fun ReflectionScreen(category: String, onBack: () -> Unit) {
             }
         }
 
-        // Centering the question in the remaining space
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -39,7 +40,7 @@ fun ReflectionScreen(category: String, onBack: () -> Unit) {
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = question.text,
+                text = currentQuestion.text,
                 style = MaterialTheme.typography.displaySmall,
                 fontStyle = FontStyle.Italic,
                 textAlign = TextAlign.Center,
@@ -47,9 +48,26 @@ fun ReflectionScreen(category: String, onBack: () -> Unit) {
             )
         }
 
-        // A simple prompt at the bottom
+        // The Next Button logic
+        Button(
+            onClick = {
+                // Increment index or loop back to 0
+                if (currentIndex < questions.size - 1) {
+                    currentIndex++
+                } else {
+                    currentIndex = 0
+                }
+            },
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 16.dp),
+            shape = MaterialTheme.shapes.medium
+        ) {
+            Text("Next Question")
+        }
+
         Text(
-            text = "Take a moment to breathe and reflect.",
+            text = "Question ${currentIndex + 1} of ${questions.size}",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.outline,
             modifier = Modifier
