@@ -13,9 +13,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ReflectionScreen(category: String, onBack: () -> Unit) {
-    // Retrieve all questions for the category instead of just one
+    // Get all questions for this category
     val questions = remember { QuestionRepository.getQuestionsByCategory(category) }
-    // Track which question we are currently showing
+    // State to keep track of which question is currently displayed
     var currentIndex by remember { mutableIntStateOf(0) }
     val currentQuestion = questions[currentIndex]
 
@@ -24,6 +24,7 @@ fun ReflectionScreen(category: String, onBack: () -> Unit) {
             .fillMaxSize()
             .padding(24.dp)
     ) {
+        // Top Bar - Close button
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
@@ -33,6 +34,7 @@ fun ReflectionScreen(category: String, onBack: () -> Unit) {
             }
         }
 
+        // Center the question text
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -48,10 +50,10 @@ fun ReflectionScreen(category: String, onBack: () -> Unit) {
             )
         }
 
-        // The Next Button logic
+        // The "Next" Button
         Button(
             onClick = {
-                // Increment index or loop back to 0
+                // Loop back to the first question after the last one
                 if (currentIndex < questions.size - 1) {
                     currentIndex++
                 } else {
@@ -60,12 +62,12 @@ fun ReflectionScreen(category: String, onBack: () -> Unit) {
             },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp),
-            shape = MaterialTheme.shapes.medium
+                .padding(bottom = 16.dp)
         ) {
             Text("Next Question")
         }
 
+        // Question counter and prompt
         Text(
             text = "Question ${currentIndex + 1} of ${questions.size}",
             style = MaterialTheme.typography.bodyMedium,
