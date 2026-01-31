@@ -1,4 +1,4 @@
-package com.example.deepthought
+package com.nalin.deepthought
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -1,4 +1,4 @@
-package com.example.deepthought
+package com.nalin.deepthought
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

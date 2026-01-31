@@ -1,4 +1,4 @@
-package com.example.deepthought
+package com.nalin.deepthought
 
 data class DeepQuestion(
     val id: Int,
