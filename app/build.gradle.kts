@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.deepthought"
+    namespace = "com.nalin.deepthought"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.deepthought"
+        applicationId = "com.nalin.deepthought"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
